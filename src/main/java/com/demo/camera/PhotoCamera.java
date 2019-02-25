@@ -1,7 +1,6 @@
 package com.demo.camera;
 
 public class PhotoCamera {
-
     private ImageSensor imageSensor;
     private Card card;
     private boolean cameraStatus;
@@ -53,4 +52,3 @@ public class PhotoCamera {
         }
     }
 }
-
