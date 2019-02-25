@@ -66,7 +66,6 @@ public class PhotoCameraTest {
         Mockito.verifyZeroInteractions(imageSensor);
     }
 
-
     //4. Naciśnięcie migawki z włączonym zasilaniem, kopiuje dane z sensora do karty pamięci.
     //_(Zapisywanie danych do karty pamięci zajmuje nieco czasu.)_
     @Test
