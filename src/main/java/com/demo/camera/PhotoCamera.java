@@ -1,6 +1,6 @@
 package com.demo.camera;
 
-public class PhotoCamera {
+public class PhotoCamera implements WriteListener {
     private ImageSensor imageSensor;
     private Card card;
     private boolean cameraStatus;
@@ -38,14 +38,12 @@ public class PhotoCamera {
         if(this.cameraStatus)
         {
             this.copyPending = true;
-            card.write(imageSensor.read());
+            this.card.write(imageSensor.read());
         }
     }
 
-    public void writeCompletedArtificial()
-    {
-        this.imageSensor.writeCompleted();
-
+    @Override
+    public void writeCompleted() {
         this.copyPending = false;
         if(this.shutdownPending) {
             this.turnOff();

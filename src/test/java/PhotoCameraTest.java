@@ -1,10 +1,11 @@
-package com.demo.camera;
-
+import com.demo.camera.Card;
+import com.demo.camera.ImageSensor;
+import com.demo.camera.PhotoCamera;
+import com.demo.camera.WriteListener;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.*;
 
 public class PhotoCameraTest {
@@ -41,10 +42,13 @@ public class PhotoCameraTest {
     {
         photoCamera.turnOff();
 
+        //puszczamy w niepamięć ze ktos włączył sensor
         Mockito.clearInvocations(imageSensor);
 
+        //jak sensor nie jest włączony to zadna akcja (od teraz) nie powinna byc na nim wykonana
         photoCamera.pressButton();
 
+        //ale było by inaczej to alarmuj
         Mockito.verifyZeroInteractions(imageSensor);
     }
 
@@ -56,7 +60,10 @@ public class PhotoCameraTest {
         photoCamera.turnOn();
         photoCamera.pressButton();
 
+        //sprawdz czy ktos wywyłał .read na sensor
         Mockito.verify(imageSensor).read();
+
+        // oraz sprawdz czy ktos wywołał .write na card
         Mockito.verify(card).write(any());
     }
 
@@ -68,6 +75,7 @@ public class PhotoCameraTest {
         photoCamera.pressButton();
         photoCamera.turnOff();
 
+        //sprawdz czy ktos wczesniej jakos w kodzie wywolał metode turnOn na sensorze
         Mockito.verify(imageSensor).turnOn();
     }
 
@@ -78,7 +86,7 @@ public class PhotoCameraTest {
         photoCamera.turnOn();
         photoCamera.pressButton();
         photoCamera.turnOff();
-        photoCamera.writeCompletedArtificial();
+        photoCamera.writeCompleted();
 
         Mockito.verify(imageSensor).turnOff();
     }
